@@ -26,9 +26,20 @@ def predict():
         return jsonify({'error': str(e)}), 400
 
 if __name__ == '__main__':
+    if(not os.path.exists('data')):
+        os.makedirs('data')
+    
+    # check All_users.csv exists
+    if(not os.path.exists('data/All_users.csv')):
+        predictor.fetch_data()
+
+    if(not os.path.exists('models')):
+        os.makedirs('models')
+
     predictor.preprocess_data()
     predictor.load_data()
 
-    if predictor.model_exists():
+    if not predictor.model_exists():
+        print('Model Does not exist. Creating a new one.')
         predictor.create_model()
     app.run(debug=True, host='0.0.0.0', port=2000)

@@ -20,8 +20,10 @@ def scale_recency(group):
 
 class Predictor:
     def __init__(self):
+        print('Initializing predictor')
         self.model_path = './models/predict_model.keras' #os.getenv("MODEL_PATH")
         self.top_n = 5  # Define the top_n value
+
     
     def model_exists(self):
         if os.path.exists(self.model_path):
@@ -29,6 +31,7 @@ class Predictor:
         return False    
     
     def fetch_data(self):
+        print('Fetching data')
         DBNAME = os.getenv("DBNAME")
         HOST = os.getenv("DBHOST")
         USER = os.getenv("DBUSER")
@@ -36,7 +39,6 @@ class Predictor:
         PORT = os.getenv("DBPORT")
 
         conn = psycopg2.connect(dbname=DBNAME, user=USER, password=PASSWORD, host=HOST, port=PORT)
-
         cursor = conn.cursor()
         try: 
             cursor.execute("""--sql
@@ -112,6 +114,7 @@ class Predictor:
 
     
     def preprocess_data(self):
+        print('Preprocessing data')
         # Load the data
         users = pd.read_csv('./data/ALL_users.csv')
 
@@ -143,6 +146,7 @@ class Predictor:
         return
         
     def load_data(self):
+        print('Loading data')
 
         df = pd.read_csv('./data/ALLusersDataRecency.csv')
 
@@ -179,6 +183,7 @@ class Predictor:
 
 
     def create_model(self): 
+        print('Creating model')
         features = ['time_of_day_Morning', 'time_of_day_Afternoon', 'time_of_day_Evening', 'time_of_day_Night', 'recency_days']
         target = 'food_encoded'
         user_feature = 'user_id'
@@ -220,12 +225,14 @@ class Predictor:
 
         model.summary()
 
+        print('Fitting model')
         model.fit([self.data[user_feature], self.data[features]], self.data[target], epochs=100, batch_size=32)
 
 
         model.save(self.model_path)
 
     def predict(self, user_id, time_of_day):
+        print('Predicting')
         model = tf.keras.models.load_model(self.model_path)
         # Get the maximum recency_days value
         maxDay = 1
