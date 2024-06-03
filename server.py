@@ -42,4 +42,8 @@ if __name__ == '__main__':
     if not predictor.model_exists():
         print('Model Does not exist. Creating a new one.')
         predictor.create_model()
-    app.run(debug=True, host='0.0.0.0', port=2000)
+    else:
+        print('Predictor is ready')
+        
+    app.run(debug=True, host='0.0.0.0', port=4000)
+  

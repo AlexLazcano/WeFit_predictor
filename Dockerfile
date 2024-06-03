@@ -21,4 +21,5 @@ RUN pip install --no-cache-dir --ignore-installed -r requirements.txt
 EXPOSE 4000
 
 # Run the application
-CMD ["/bin/bash"]
+# CMD ["/bin/bash"]
+CMD ["python3", "server.py"]

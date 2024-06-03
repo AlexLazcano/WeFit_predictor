@@ -1,8 +1,8 @@
-Flask
-pandas
-numpy
+Flask==3.0.3
+pandas==2.2.2
+numpy==1.26.4
 psycopg2-binary
-scikit-learn
-python-dotenv
+scikit-learn==1.4.2
+python-dotenv==1.0.1
 # tensorflow
 # keras

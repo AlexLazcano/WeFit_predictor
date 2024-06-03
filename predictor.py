@@ -180,6 +180,7 @@ class Predictor:
         processed_data = pd.concat([user_id, processed_data], axis=1)
 
         self.data = processed_data
+        print('Data loaded')
 
 
     def create_model(self): 
@@ -226,6 +227,13 @@ class Predictor:
         model.summary()
 
         print('Fitting model')
+        print('user_feature')
+        print(self.data[user_feature].head())
+        print('features')
+        print(self.data[features].head())
+        print('target')
+        print(self.data[target].head())
+        self.data[features] = self.data[features].astype(np.float32)
         model.fit([self.data[user_feature], self.data[features]], self.data[target], epochs=100, batch_size=32)
 
 
