@@ -1,0 +1,8 @@
+Flask
+pandas
+numpy
+psycopg2-binary
+scikit-learn
+python-dotenv
+# tensorflow
+# keras
