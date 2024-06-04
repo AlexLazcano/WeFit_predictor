@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  rec-server:
+    image: tensorflow/tensorflow:latest
+    container_name: rec-container
+    env_file: 
+      - .env
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - "2000:4000"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["python3", "server.py"]
